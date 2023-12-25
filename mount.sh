@@ -1,5 +1,4 @@
 #!/system/bin/sh
-#2023/07/05
 
 MODDIR=$(dirname $(realpath $0))
 

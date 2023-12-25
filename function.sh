@@ -39,9 +39,9 @@ mount_dir () {
     rw=$(stat -c "%a" "$Target")
     reference=$(ls -Z "${Target%/*}" 2>/dev/null| grep "${Target##*/}"| cut -d' ' -f1)
     mount $mountParameters $Source $Target
-    chown $ug "$Target" -R
-    chmod $rw "$Target" -R
-    chcon -R "$reference" "$Target"
+    chown -R $ug "$Target" "$Source"
+    chmod -R $rw "$Target" "$Source"
+    chcon -R "$reference" "$Target" "$Source"
     broadcast_media
 }
 

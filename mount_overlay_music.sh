@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/system/bin/sh
 
 MODDIR=$(dirname $(realpath $0))
 
@@ -33,7 +33,7 @@ mkdir -p "$workdir" "$upperdir" "$mergeddir"
 reference=$(ls -Z "${mergeddir%/*}" 2>/dev/null| grep "${mergeddir##*/}"| cut -d' ' -f1)
 chcon -R "$reference" "$lowerDirRoot" "$upperdir" "$mergeddir"
 
-chcon u:hidden_object:s0 "$workdir" "$lowerDirRoot" "$upperdir"
+chcon u:hidden_object:s0 "$workdir" "$lowerDirRoot"
 # chcon u:object_r:media_rw_data_file:s0 -R "$lowerDirRoot" "$upperdir" "$mergeddir"
 # chcon u:object_r:sdcardfs:s0 -R "$lowerDirRoot" "$upperdir" "$mergeddir"
 

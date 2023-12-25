@@ -1,5 +1,4 @@
-#!/bin/bash
-#!/bin/bash
+#!/system/bin/sh
 
 MODDIR=$(dirname $(realpath $0))
 
