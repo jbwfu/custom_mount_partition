@@ -1,44 +1,38 @@
 # custom_mount_partition
-    本模块仅在 crDroid 系统得到测试，其他系统可能不可用
+> 本模块仅在类原生系统中测试通过，其他系统未测试
+> 须确保已使用 "多系统工具箱" 或类似工具进行分区
+
 ```
 模块路径/data/adb/modules
-  └── .
-    ├── broadcast.sh    <--- 广播媒体文件
-    ├── conf    <--- 模块配置文件
-    ├── end.sh    <--- 扫尾工作
-    ├── function.sh  <--- 模块函数
-    ├── module.prop <--- 模块元数据
-    ├── mount.sh    <--- 挂载时执行
-    ├── umount.sh   <--- 临时卸载时执行
-    └── log.txt       <--- 日志文件: 咕咕咕
+    └── /custom_mount_partition
+      ├── conf               <--- 模块配置文件
+      ├── function.sh        <--- 模块函数
+      ├── mount.sh           <--- 挂载时执行
+      ├── umount.sh          <--- 卸载时执行
+      ├── custom_mount.sh    <--- 自定义挂载
+      ├── custom_umount.sh   <--- 自定义挂载的卸载
+      ├── module.prop        <--- 模块元数据
+      └── log.txt            <--- 日志文件，仅用于记录重启时的挂载过程
 ```
-- Magisk 20.4+
-- 支持KernelSU
 
 ## 为什么会有这个模块
-- 将主要文件存放在第二分区，刷机免备份，易迁移
+- 将主要文件存放在第二分区，免于备份
 - 用于在多系统中共享数据
 
 ## 模块特性
-- 权限与挂载前路径权限一致
-- chcon 基于原路径属性修改安全上下文
-- 默认挂载位置基于`/mnt/runtime/full/emulated/0/`，挂载后普通软件可读写
-
-## TODO
-- 免重启解除挂载
-- 适配MIUI系统
+- `conf` 配置可使在 `/sdcard` 的挂载供非root软件读写
+- 自适应不同系统对 `/data/media/0/` 目录下文件夹的挂载
+- 支持自定义挂载
+- 多用户支持（仅为当前用户挂载）
 
 ## 使用方法
-1. 模块刷入后重启自动生效,默认仅挂载分区及 ex_sd 目录
-2. 解压至任意有执行权限的目录（非/storage/emulated/0/）后以 root 权限执行 mount.sh
-
-访问原始路径请使用 /data/media/0/
-
-```
-# 查看挂载状态
-homeRootDir="/mnt/runtime/full/emulated/0/"
-mount |grep $homeRootDir
-```
+① 解压执行
+② 作为模块开机自动挂载（请确保模块能够正常工作，更新模块须同步个人配置至模块后刷入）
+  - Magisk 20.4+
+  - 支持 KernelSU
+  - 支持 Apatch
 
 ## 自定义挂载
-详见 conf 及 mount.sh 文件
+挂载至 `/sdcard` 可使用 `conf` 文件进行简单配置
+
+复杂的自定义挂载请使用 `custom_mount.sh` 文件，同时在 `custom_umount.sh` 配置相应卸载操作

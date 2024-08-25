@@ -1,39 +1,26 @@
 # 本质上是一个shell文件，所以修改请遵循语法规则
-# 此配置适用于crDroid等类原生系统
-# MIUI等魔该系统可能不生效，或许可以找到有效挂载路径及参数
+# 为多用户提供了一个 user_id 变量
 
-# 分区挂载路径
-exsdRootDir="/mnt/media_rw/sny"
-
-# 用于挂载文件夹的路径，一般不动
-homeRootDir="/mnt/runtime/full/emulated/0"
-
-# 需要挂载分区的绝对路径
+# 待挂载分区
 partition="/dev/block/by-name/rannki"
 
-# 分区内文件夹挂载参数
-mountParameters="-t sdcardfs -o rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=9997,derive_gid,default_normal"
+# 分区挂载点
+exsdRootDir="/mnt/rannki"
 
-# 挂载时若无源文件，是否移动现有文件夹至源路径，
-# 默认只挂载不移动，挂载后可前往 /data/media/0/ 目录手动处理
-moveMode=false
+# 此变量供文件夹挂载使用，请勿修改
+homeRootDir="/data/media/$user_id"
 
 # 挂载配置一行一个，格式如下：
-# ${需挂载目录在分区根目录的相对路径}:${相对于 /sdcard/ 目录的相对路径}
-# ex_sd;ex_sd 意为将 /mnt/media_rw/sny/ex_sd 挂载至 /sdcard/ex_sd
-# 内部的注释无空格
+# ${需挂载目录的绝对路径}:${挂载点的绝对路径}
+# `$exsdRootDir/ex_sd;$homeRootDir/ex_sd` 意为将 $exsdRootDir/ex_sd 挂载至 $homeRootDir/ex_sd
+# 变量支持单行注释但必须不带空格
+# 若想要支持带空格路径或特殊路径，请使用 custom_mount.sh 自定义挂载
 mountDir="
-ex_sd;ex_sd
-#这是一个注释
-#Backups;Backups
-#Home/DCIM;DCIM
-#Home/Documents;Documents
-#Home/Download;Download
-#Home/Movies;Movies
-#Home/Music;Music
-#Home/Pictures;Pictures
+$exsdRootDir/ex_sd;$homeRootDir/ex_sd
+#$exsdRootDir/Home/DCIM;$homeRootDir/DCIM
+#$exsdRootDir/Home/Documents;$homeRootDir/Documents
+#$exsdRootDir/Home/Download;$homeRootDir/Download
+#$exsdRootDir/Home/Movies;$homeRootDir/Movies
+#$exsdRootDir/Home/Music;$homeRootDir/Music
+#$exsdRootDir/Home/Pictures;$homeRootDir/Pictures
 "
-
-# 若要挂载至其他路径，建议在 mount.sh 或 end.sh 文件中添加
-# 效果未作测试，可能需要自定义 mountParameters 变量
-

@@ -9,6 +9,5 @@ mount_partition
 
 start_mount_dir
 
-# 其他自定义挂载
-# homeRootDir="/mnt/runtime/full/emulated/0"
-# mountParameters="-t sdcardfs -o rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=9997,derive_gid,default_normal"
+chmod +x "$MODDIR/custom_mount.sh"
+$MODDIR/custom_mount.sh

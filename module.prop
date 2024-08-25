@@ -1,9 +1,6 @@
 id=custom_mount_partition
 name=挂载分区及个人文件夹
-version=2.8
-versionCode=20231224
-author=jbwfu
-description=配合［多系统工具箱］使用，支持任意软件读写。\n\
-分区挂载路径为/mnt/media_rw/sny, \
-额外挂载/sdcard/ex_sd, \
-可选挂载Pictures等个人文件夹。
+version=3.0
+versionCode=20240823
+author=步步步步
+description=配合“多系统工具箱”使用（用于分区），支持任意软件读写。

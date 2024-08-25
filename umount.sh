@@ -5,9 +5,9 @@ MODDIR=$(dirname $(realpath $0))
 . "$MODDIR/function.sh"
 init_conf "$MODDIR/conf"
 
+chmod +x "$MODDIR/custom_umount.sh"
+$MODDIR/custom_umount.sh
+
 umount_dir
 
-# umount_partition
-
-# 其他自定义挂载
-# umount 挂载后绝对路径
+umount_partition

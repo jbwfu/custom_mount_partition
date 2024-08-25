@@ -14,10 +14,5 @@ sleep 5
 chmod +x $MODDIR/mount.sh
 $MODDIR/mount.sh
 
-chmod +x $MODDIR/broadcast.sh
-$MODDIR/broadcast.sh
-
-chmod +x $MODDIR/end.sh
-$MODDIR/end.sh
-
-# setenforce 1
+chmod +x $MODDIR/custom_mount.sh
+$MODDIR/custom_mount.sh
