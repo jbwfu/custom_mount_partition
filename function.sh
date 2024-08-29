@@ -5,8 +5,45 @@ user_id=$(basename $(realpath /storage/self/primary))
 if [[ -z "$user_id" ]]; then exit 1; fi
 
 init_conf() {
-    source ${1}
+    if [[ -n $1 ]]; then conf_path="$1"; else conf_path="$MODDIR/conf"; fi
+    echo "use config \"$conf_path\""
+    . "$conf_path"
     mountDir=$(echo "$mountDir" | sed 's/#[^ ]*//g')
+}
+
+update_config() {
+    if [[ -n $1 ]]; then conf_path="$1"; else conf_path="$MODDIR/conf"; fi
+
+mountDir_example='$exsdRootDir/ex_sd;$homeRootDir/ex_sd
+#$exsdRootDir/Home/DCIM;$homeRootDir/DCIM
+#$exsdRootDir/Home/Documents;$homeRootDir/Documents
+#$exsdRootDir/Home/Download;$homeRootDir/Download
+#$exsdRootDir/Home/Movies;$homeRootDir/Movies
+#$exsdRootDir/Home/Music;$homeRootDir/Music
+#$exsdRootDir/Home/Pictures;$homeRootDir/Picture'
+
+cat <<EOF > "$conf_path"
+# 本质上是一个shell文件，所以修改请遵循语法规则
+# 为多用户提供了一个 user_id 变量
+
+# 需要挂载分区
+partition="${partition:=/dev/block/by-name/rannki}"
+
+# 分区挂载点
+exsdRootDir="${exsdRootDir:=/mnt/rannki}"
+
+# 此变量供文件夹挂载使用，请勿修改
+homeRootDir="/data/media/\${user_id:-0}"
+
+# 挂载配置一行一个，格式如下：
+# \${需挂载目录的绝对路径}:\${挂载点的绝对路径}
+# "\$exsdRootDir/ex_sd;\$homeRootDir/ex_sd" 意为将 "\$exsdRootDir/ex_sd" 挂载至 "\$homeRootDir/ex_sd"
+# 变量支持单行注释但必须不带空格
+# 若想要支持带空格路径或特殊路径，请使用 custom_mount.sh 自定义挂载
+mountDir="
+${mountDir:-$mountDir_example}
+"
+EOF
 }
 
 broadcast_media() {
