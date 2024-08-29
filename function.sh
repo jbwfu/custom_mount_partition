@@ -11,6 +11,7 @@ init_conf() {
 
 broadcast_media() {
     dir=$(echo "$1" | sed "s#/data/media/$user_id#/sdcard#")
+    dir=$(echo "$1" | sed "s#/mnt/pass_through/$user_id/emulated/$user_id#/sdcard#")
     am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://$dir" >/dev/null
 }
 
