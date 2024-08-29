@@ -12,8 +12,7 @@ done
 sleep 5
 
 chmod +x $MODDIR/mount.sh
-$MODDIR/mount.sh >$MODDIR/mount.log 2>&1
+$MODDIR/mount.sh >$MODDIR/service.log 2>&1
 
 chmod +x $MODDIR/custom_mount.sh
-$MODDIR/custom_mount.sh >>$MODDIR/mount.log 2>&1
-
+$MODDIR/custom_mount.sh >>$MODDIR/service.log 2>&1
