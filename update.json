@@ -1,6 +1,6 @@
 {
-    "version": "3.1.0",
-    "versionCode": "20240829",
-    "zipUrl": "https://github.com/jbwfu/custom_mount_partition/releases/download/v3.1.0/custom_mount_partition-v3.1.0.zip",
+    "version": "3.2.0",
+    "versionCode": "20240904",
+    "zipUrl": "https://github.com/jbwfu/custom_mount_partition/releases/download/v3.2.0/custom_mount_partition-v3.2.0.zip",
     "changelog": "https://raw.githubusercontent.com/jbwfu/custom_mount_partition/main/CHANGELOG.md"
 }

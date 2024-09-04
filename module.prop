@@ -1,7 +1,7 @@
 id=custom_mount_partition
 name=挂载分区及个人文件夹
-version=3.1.0
-versionCode=20240829
+version=3.2.0
+versionCode=20240904
 author=步步步步
-description=配合“多系统工具箱”使用（用于分区），支持任意软件读写。
+description=配合“多系统工具箱”使用（用于分区），挂载分区至 /sdcard ，支持任意软件读写。
 updateJson=https://raw.githubusercontent.com/jbwfu/custom_mount_partition/main/update.json
