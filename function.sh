@@ -7,7 +7,7 @@ init_conf() {
     if [[ -n $1 ]]; then conf_path="$1"; else conf_path="$MODDIR/conf"; fi
     echo "use config \"$conf_path\""
     . "$conf_path"
-    mountDir=$(echo "$mountDir" | sed 's/#[^ ]*//g')
+    mountDir=$(echo "$mountDir" | sed 's/#[^ ]*//g;/^$/d')
 }
 
 update_config() {

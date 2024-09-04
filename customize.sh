@@ -4,6 +4,7 @@ MODPATH_ACTUAL=$(ui_print "$MODPATH" | sed 's#/data/adb/modules_update#/data/adb
 if [[ -f "$MODPATH_ACTUAL/conf" ]]; then
     ui_print "use config \"$MODPATH_ACTUAL/conf\" to update"
     . "$MODPATH_ACTUAL/conf"
+    mountDir=$(echo "$mountDir" | sed '/^$/d')
 fi
 ui_print "update config \"$MODPATH/conf\""
 update_config "$MODPATH/conf"
