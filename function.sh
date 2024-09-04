@@ -1,6 +1,5 @@
 #!/system/bin/sh
 
-
 user_id=$(basename $(realpath /storage/self/primary))
 if [[ -z "$user_id" ]]; then exit 1; fi
 
@@ -44,6 +43,59 @@ mountDir="
 ${mountDir:-$mountDir_example}
 "
 EOF
+}
+
+output_custom_scripts() {
+if [[ -d "$1" ]]; then
+    currentdir="$1"
+    targerdir=$(echo "$currentdir" | sed 's#/data/adb/modules_update#/data/adb/modules#')
+else
+    currentdir=$(dirname $(realpath $0))
+    targerdir="$currentdir"
+fi
+if [[ -f "$targerdir/custom_mount.sh" ]]; then
+    cp "$targerdir/custom_mount.sh" "$currentdir/custom_mount.sh"
+else
+cat << EOF > "$currentdir/custom_mount.sh"
+#!/system/bin/sh
+# 此脚本在 mount.sh 脚本中最后执行
+# 可用于执行自定义挂载
+
+# MODDIR=\$(dirname \$(realpath \$0))
+
+# . "\$MODDIR/function.sh"
+# init_conf
+
+# chmod +x \$MODDIR/custommount/custom_mount_example.sh
+# \$MODDIR/custommount/custom_mount_example.sh
+
+EOF
+fi
+
+if [[ -f "$targerdir/custom_umount.sh" ]]; then
+    cp "$targerdir/custom_umount.sh" "$currentdir/custom_umount.sh"
+else
+cat << EOF > "$currentdir/custom_umount.sh"
+#!/system/bin/sh
+# 此脚本在 umount.sh 脚本中优先执行
+# 用于执行自定义挂载的卸载操作
+
+# MODDIR=\$(dirname \$(realpath \$0))
+
+# . "\$MODDIR/function.sh"
+# init_conf
+
+# chmod +x \$MODDIR/custommount/custom_umount_example.sh
+# \$MODDIR/custommount/custom_umount_example.sh
+
+EOF
+fi
+
+if [[ -d "$targerdir/custommount" ]]; then
+    cp -r "$targerdir/custommount" "$currentdir/"
+else
+    mkdir "$currentdir/custommount"
+fi
 }
 
 broadcast_media() {
