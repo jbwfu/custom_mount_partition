@@ -99,8 +99,12 @@ fi
 }
 
 broadcast_media() {
-    dir=$(echo "$1" | sed "s#/data/media/$user_id#/sdcard#")
-    dir=$(echo "$1" | sed "s#/mnt/pass_through/$user_id/emulated/$user_id#/sdcard#")
+    if [[ -z "$1" ]]; then
+        dir="/sdcard"
+    else
+        dir=$(echo "$1" | sed "s#/data/media/$user_id#/sdcard#")
+        dir=$(echo "$1" | sed "s#/mnt/pass_through/$user_id/emulated/$user_id#/sdcard#")
+    fi
     echo "broadcast dir \"$dir\""
     am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://$dir" >/dev/null
 }

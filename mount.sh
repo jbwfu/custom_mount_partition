@@ -11,3 +11,5 @@ start_mount_dir 2>&1 | tee -a mount.log
 
 chmod +x "$MODDIR/custom_mount.sh"
 $MODDIR/custom_mount.sh 2>&1 | tee -a mount.log
+
+broadcast_media
